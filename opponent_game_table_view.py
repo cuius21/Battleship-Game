@@ -164,14 +164,14 @@ class OpponentGameTableView:
             self.compcounter_ships -= 1
         #sprawdzenie czy statek jest zatopiony, nie moze byc
             if self.destroyed_enemyShips(i ,j) == True:
-                self.label2.config(text = 'Trafiony zatopiony')
+                self.label2.config(text = 'Trafiony zatopiony', fg = 'green')
             else:
                 self.label2.config(text = 'Trafiony')
             self.playerField[j][i] = 'X'
         else:
             self.buttons[i][j].config(bg='blue')
             self.buttons[i][j].config(state='disabled')
-            self.label2.config(text='Pudło')
+            self.label2.config(text='Pudło', fg = 'black')
 
         for x in range(10):
             for y in range(10):
@@ -194,7 +194,7 @@ class OpponentGameTableView:
             self.GameTableView.buttons[self.rand_x][self.rand_y].config(bg = 'red')
             self.usercounter_ships -=1
             if self.destroyed_myShips(self.rand_x, self.rand_y) == True:
-                self.GameTableView.label2.config(text='Trafiony zatopiony !!!')
+                self.GameTableView.label2.config(text='Trafiony zatopiony !!!', fg='green')
                 self.shot = True
                 self.Xright = True
                 self.Xleft = False
@@ -224,7 +224,7 @@ class OpponentGameTableView:
                     pass
 
             else:
-                self.GameTableView.label2.config(text="Trafiony")
+                self.GameTableView.label2.config(text="Trafiony", fg='black')
                 self.shot = False
                 self.GameTableView.playerField[self.rand_y][self.rand_x] = 'X'
 
@@ -341,7 +341,7 @@ class OpponentGameTableView:
                     self.Ydown = True
         else:
             self.GameTableView.buttons[self.rand_x][self.rand_y].config(bg='blue')
-            self.GameTableView.label2.config(text='Pudło')
+            self.GameTableView.label2.config(text='Pudło', fg='black')
             self.GameTableView.playerField[self.rand_y][self.rand_x] = 'U'
 
             if self.shot == False and self.Xright == True:
@@ -369,7 +369,10 @@ class OpponentGameTableView:
                         self.rand_y = self.rand_y+1
                         self.rand_x = self.rand_x
                         self.Yup = True
-
+                    elif self.GameTableView.playerField[self.rand_y+1][self.rand_x] == 'U':
+                        self.Yup = False
+                        self.rand_y = self.rand_y-1
+                        self.Ydown = True
                 elif self.GameTableView.playerField[self.rand_y][self.rand_x-3] != 'X' :
                     self.rand_x = self.rand_x - 3
                     self.Xleft = True
@@ -562,3 +565,5 @@ class OpponentGameTableView:
     def end_game(self):
         end_your_table = self.GameTableView.window.destroy()
         end_my_table = self.window.destroy()
+
+
